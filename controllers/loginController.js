@@ -1,3 +1,5 @@
-exports.login = (req, res)=>{
-    
+module.exports = class LoginController{
+    login(req, res){
+        
+    }
 }
