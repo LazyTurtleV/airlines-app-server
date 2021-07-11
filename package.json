@@ -1,0 +1,26 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "Server of app",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VladymyrAlekseevich/airlines-app-server.git"
+  },
+  "author": "VAS",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/VladymyrAlekseevich/airlines-app-server/issues"
+  },
+  "homepage": "https://github.com/VladymyrAlekseevich/airlines-app-server#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "jest": "^27.0.6"
+  }
+}
