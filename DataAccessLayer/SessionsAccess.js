@@ -3,13 +3,13 @@ const Timer = require('../service_modules/Timer')
 
 module.exports = class SessionAccess{
     constructor(){
-        this.sessionsMap = new Map();
+        this._sessionsMap = new Map();
 
         this.deleteSession = this.deleteSession.bind(this);
     }
 
     addSession(sessionID, sessionInstance){
-        this.sessionsMap.set(
+        this._sessionsMap.set(
             sessionID,
             {
                 session: sessionInstance,
@@ -19,19 +19,19 @@ module.exports = class SessionAccess{
     }
 
     deleteSession(sessionID){
-        this.sessionsMap.get(sessionID).session.destroy();
-        this.sessionsMap.delete(sessionID)
+        this._sessionsMap.get(sessionID).session.destroy();
+        this._sessionsMap.delete(sessionID)
     }
     
     getSession(sessionID){
-        this.sessionsMap.get(sessionID)
+        this._sessionsMap.get(sessionID)
     }
 
     hasSession(sessionID){
-        return this.sessionsMap.has(sessionID)
+        return this._sessionsMap.has(sessionID)
     }
 
     resetSessionIdleTimer(sessionID){
-        this.sessionsMap.get(sessionID).idleTimer.reset()
+        this._sessionsMap.get(sessionID).idleTimer.reset()
     }
 }

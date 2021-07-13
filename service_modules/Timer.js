@@ -1,12 +1,12 @@
 module.exports = class Timer{
     constructor(callback, time){
-        this.CALLBACK = callback;
-        this.TIME = time;
-        this.timerHandler = setTimeout(this.CALLBACK, this.TIME);
+        this._CALLBACK = callback;
+        this._TIME = time;
+        this._timerHandler = setTimeout(this._CALLBACK, this._TIME);
     }
 
     reset(){
-        clearTimeout(this.timerHandler);
-        this.timerHandler = setTimeout(this.CALLBACK, this.TIME)
+        clearTimeout(this._timerHandler);
+        this._timerHandler = setTimeout(this._CALLBACK, this._TIME)
     }
 }
