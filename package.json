@@ -19,7 +19,8 @@
   },
   "homepage": "https://github.com/VladymyrAlekseevich/airlines-app-server#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "mysql2": "^2.2.5"
   },
   "devDependencies": {
     "@types/jest": "^26.0.24",
