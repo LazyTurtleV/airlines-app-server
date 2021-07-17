@@ -6,6 +6,9 @@ class LoginController{
     constructor(){
         this._loginService = new AuthorizationService();
         this._secretKey = require('crypto').randomBytes(64).toString('HEX');
+
+        this.login = this.login.bind(this)
+        this.isUserAuthorized = this.isUserAuthorized.bind(this)
     }
     
     async login(req, res){
@@ -26,8 +29,12 @@ class LoginController{
         res.send(authorizationStatus)
     }
 
-    isUserAuthorized(sessionID){
-        return this._loginService.isAuthorized(sessionID)
+    isUserAuthorized(req, res){
+        cookieParser(this._secretKey);
+
+        let decryptedCookie = cookieParser.signedCookie(req.cookie, this._secretKey);
+        let isAuthentificated = this._loginService.isAuthorized(decryptedCookie)
+        res.send({isAuthentificated})
     }
 }
 
