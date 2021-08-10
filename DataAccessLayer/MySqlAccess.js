@@ -15,10 +15,10 @@ module.exports = class MySqlAccess{
     async getUser(login){
         let sqlRequest = 'SELECT password, role_ref as role_code FROM users ' +
                          'JOIN user_roles ON users.id = user_roles.user_ref '+ 
-                         `WHERE login = '${login}'`;
+                         `WHERE login = ?`;
 
         if(!this._isConnectionEstablished) await this._init();
-        let [ rows, __ ] = await this._connection.query(sqlRequest); 
+        let [ rows, __ ] = await this._connection.query(sqlRequest, [login]); 
 
         return rows[0];
     }
