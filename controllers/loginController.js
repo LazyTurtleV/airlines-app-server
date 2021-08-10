@@ -12,8 +12,6 @@ class LoginController{
     }
     
     async login(req, res){
-        cookieParser(this._secretKey);
-
         let authorizationStatus = await this._loginService.authenticateUser({
             login: req.body.login,
             password: req.body.password
@@ -22,6 +20,7 @@ class LoginController{
         if(authorizationStatus.isAuthentificated){
             res.cookie('sid', authorizationStatus.session.id, {
                 MaxAge: IDLE_TIME,
+                sameSite: 'strict',
                 signed: true
             })
         }
@@ -30,9 +29,8 @@ class LoginController{
     }
 
     isUserAuthorized(req, res){
-        cookieParser(this._secretKey);
+        let decryptedCookie = cookieParser.signedCookie(req.signedCookies.sid, this._secretKey);
 
-        let decryptedCookie = cookieParser.signedCookie(req.cookie, this._secretKey);
         let isAuthentificated = this._loginService.isAuthorized(decryptedCookie)
         res.send({isAuthentificated})
     }
