@@ -16,15 +16,15 @@ module.exports = class AuthorizationService{
 
         try{
             let user = await this._DBmodelInstance.getUser(requestData.login);
-
-            if(user.password !== requestData.password)
+            
+            if(user?.password !== requestData.password)
                 throw new Error('Authentification failed: invalid login or password');
-            if(user.role_code !== 'ADM')
+            if(user?.role_code !== 'ADM')
                 throw new Error('Access denied: admin permissions required')
 
             this._allow(response)
         }catch(e){
-            response.err = e;
+            response.errMessage = e.message;
             console.log(e);
         }
 
