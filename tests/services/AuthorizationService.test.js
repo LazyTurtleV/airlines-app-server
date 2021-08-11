@@ -30,7 +30,7 @@ describe('Authorization service', ()=>{
     test('If login&password valid and role code is ADM, session must be started', async ()=>{
         serviceInst._DBmodelInstance.getUser.mockImplementation(async login=>{
             if(login === 'User'){
-                return {password: serviceInst._encrypt('User'), role_code: 'ADM'}
+                return {password: serviceInst._encrypt({login:'User', password:'User'}), role_code: 'ADM'}
             }
         });
         
