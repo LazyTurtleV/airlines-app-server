@@ -1,5 +1,5 @@
 const mysql = require('mysql2/promise')
-const CONFIG = require('../connectionConfig.json')
+const CONFIG = require('../consts/connectionConfig.json')
 
 module.exports = class MySqlAccess{
     async _init(){
