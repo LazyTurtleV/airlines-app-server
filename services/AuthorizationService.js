@@ -17,7 +17,7 @@ module.exports = class AuthorizationService{
         try{
             let user = await this._DBmodelInstance.getUser(requestData.login);
             
-            if(user?.password !== requestData.password)
+            if(user?.password !== this._encrypt(requestData.password))
                 throw new Error('Authentification failed: invalid login or password');
             if(user?.role_code !== 'ADM')
                 throw new Error('Access denied: admin permissions required')
@@ -25,7 +25,6 @@ module.exports = class AuthorizationService{
             this._allow(response)
         }catch(e){
             response.errMessage = e.message;
-            console.log(e);
         }
 
         return response;
@@ -33,6 +32,12 @@ module.exports = class AuthorizationService{
 
     isAuthorized(sessionID){
         return this._sessionModelInstance.hasSession(sessionID)
+    }
+
+    _encrypt(requestData){
+        let crypto = require('crypto');
+
+        return crypto.createHash('md5').update(`${requestData.password}::${requestData.login}`).digest('HEX');
     }
 
     _allow(authenticationState){
