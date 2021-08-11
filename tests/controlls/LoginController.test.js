@@ -1,6 +1,8 @@
 jest.mock('../../services/AuthorizationService');
+jest.mock('cookie-parser');
 
 const loginController = require('../../controllers/loginController')
+const cookieParser = require('cookie-parser');
 
 describe('Login controller', ()=>{
     const SESSION_ID = "LOL";
@@ -56,7 +58,19 @@ describe('Login controller', ()=>{
 
     test('If user session hasn`t timed out yet, user has to stay authorized', ()=>{
         loginController._loginService.isAuthorized.mockImplementation(ID=>ID === SESSION_ID);
+        cookieParser.signedCookie.mockImplementation(__ => __);
 
-        expect(loginController.isUserAuthorized(SESSION_ID)).toBe(true)
+        let request = {
+            signedCookies: {
+                sid: SESSION_ID
+            }
+        }
+        let response = {
+            send: function (obj){
+                this.obj = obj;
+            }
+        }
+        loginController.isUserAuthorized(request, response);
+        expect(response.obj.isAuthentificated).toBe(true)
     })
 })
