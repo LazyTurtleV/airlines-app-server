@@ -19,7 +19,6 @@ module.exports = class SessionAccess{
     }
 
     deleteSession(sessionID){
-        this._sessionsMap.get(sessionID).session.destroy();
         this._sessionsMap.delete(sessionID)
     }
     
